@@ -3,7 +3,7 @@ function getDistance(aX, aY, bX, bY) {
   if (args.length !== 4 || !args.every((el) => Math.abs(el) <= 1000 && typeof el === 'number')) {
     throw new Error();
   } else {
-    const res = ((bX - aX) ** 2 + (bY - aY) ** 2) ** (0.5).toFixed(2);
+    const res = ((bX - aX) ** 2 + (bY - aY) ** 2) ** 0.5;
     const trunkRes = Math.trunc(res * 100) / 100;
     return trunkRes;
   }
