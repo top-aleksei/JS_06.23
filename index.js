@@ -34,23 +34,6 @@ function makeDeepCopyWithoutValidation(obj) {
   }
 }
 
-// const test = {
-//   name: 'top',
-//   cont: {
-//     main: {
-//       work: '23',
-//       home: 12,
-//     },
-//   },
-// };
-// const test2 = {
-//   name: 'top',
-//   main: {
-//     work: ['asd', { ob: 'test' }],
-//     home: 12,
-//   },
-// };
-
 // Task 2
 
 function createIterable(from, to) {
@@ -84,20 +67,6 @@ function createIterable(from, to) {
     };
   }
 }
-
-// createIterable(1);
-// createIterable(1, 10);
-// createIterable(11, 10);
-// createIterable(11, 100);
-// createIterable(NaN, 100);
-// createIterable(null, 100);
-// createIterable('a', 'b');
-
-// const iter = createIterable('as', -1);
-
-// for (let i of iter) {
-//   console.log(i);
-// }
 
 // Task 3
 
@@ -134,23 +103,3 @@ function createProxy(obj) {
     return proxy;
   }
 }
-
-const testObj = { age: 27 };
-
-const proxy = createProxy(3);
-// const y2 = proxy.age;
-
-// proxy.name = { s: 'sd' };
-
-// console.log('ob', testObj);
-
-// proxy.name = null;
-// proxy.age = null;
-
-// console.log('ob', testObj);
-// const x = proxy.name;
-// const x2 = proxy.name;
-// const y = proxy.age;
-// proxy.name = 2;
-
-// console.log('ob', testObj);
