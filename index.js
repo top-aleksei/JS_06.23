@@ -34,8 +34,6 @@ function makeDeepCopyWithoutValidation(obj) {
   }
 }
 
-// Task 2
-
 // const test = {
 //   name: 'top',
 //   cont: {
@@ -52,3 +50,107 @@ function makeDeepCopyWithoutValidation(obj) {
 //     home: 12,
 //   },
 // };
+
+// Task 2
+
+function createIterable(from, to) {
+  const args = [...arguments];
+  if (
+    args.length != 2 ||
+    !args.every(
+      (el) =>
+        typeof el === 'number' && Number.isFinite(el) && !Number.isNaN(el) && Number.isInteger(el),
+    ) ||
+    to <= from
+  ) {
+    throw new Error('');
+  } else {
+    return {
+      from: from,
+      to: to,
+      [Symbol.iterator]: function () {
+        return {
+          current: this.from,
+
+          next() {
+            if (this.current <= to) {
+              return { value: this.current++, done: false };
+            } else {
+              return { done: true };
+            }
+          },
+        };
+      },
+    };
+  }
+}
+
+// createIterable(1);
+// createIterable(1, 10);
+// createIterable(11, 10);
+// createIterable(11, 100);
+// createIterable(NaN, 100);
+// createIterable(null, 100);
+// createIterable('a', 'b');
+
+// const iter = createIterable('as', -1);
+
+// for (let i of iter) {
+//   console.log(i);
+// }
+
+// Task 3
+
+function createProxy(obj) {
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+    throw new Error();
+  } else {
+    const proxyHandlers = {
+      get(target, property) {
+        if (
+          target[property] &&
+          !target[property].readAmount &&
+          target[property]?.readAmount !== 0
+        ) {
+          const tempValue = target[property];
+          target[property] = { value: tempValue, readAmount: 0 };
+        }
+        target[property].readAmount++;
+        return target[property];
+      },
+      set(target, prop, value) {
+        if (target[prop]) {
+          if (typeof target[prop].value === typeof value) {
+            target[prop].value = value;
+          } else {
+            return;
+          }
+        } else {
+          target[prop] = { value: value, readAmount: 0 };
+        }
+      },
+    };
+    const proxy = new Proxy(obj, proxyHandlers);
+    return proxy;
+  }
+}
+
+const testObj = { age: 27 };
+
+const proxy = createProxy(3);
+// const y2 = proxy.age;
+
+// proxy.name = { s: 'sd' };
+
+// console.log('ob', testObj);
+
+// proxy.name = null;
+// proxy.age = null;
+
+// console.log('ob', testObj);
+// const x = proxy.name;
+// const x2 = proxy.name;
+// const y = proxy.age;
+// proxy.name = 2;
+
+// console.log('ob', testObj);
