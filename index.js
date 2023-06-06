@@ -17,3 +17,22 @@ Array.prototype.customFilter = function (fn, context) {
 };
 
 // Task 2
+
+function bubbleSort(arr) {
+  if (!arr.every((el) => isFinite(el) && !isNaN(el) && typeof el === 'number')) {
+    throw new Error('Invalid argument.');
+  }
+  const results = arr.slice();
+  for (let i = 0; i < results.length - 1; i++) {
+    for (let j = 0; j < results.length - i; j++) {
+      if (results[j] > results[j + 1]) {
+        let temp = results[j];
+        results[j] = results[j + 1];
+        results[j + 1] = temp;
+      }
+    }
+  }
+  return results;
+}
+
+// Task 3
