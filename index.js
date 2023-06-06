@@ -36,3 +36,25 @@ function bubbleSort(arr) {
 }
 
 // Task 3
+
+function storageWrapper(callBack, arr) {
+  if (!callBack || typeof callBack !== 'function') {
+    throw new Error('Invalid argument.');
+  } else if (arr && !Array.isArray(arr)) {
+    throw new Error('Invalid argument.');
+  } else {
+    if (arr) {
+      return function (...args) {
+        const res = callBack(...args);
+        arr.push(res);
+        return res;
+      };
+    } else {
+      const res = [];
+      return function (...args) {
+        res.push(callBack(...args));
+        return res;
+      };
+    }
+  }
+}
