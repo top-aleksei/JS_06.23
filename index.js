@@ -3,7 +3,13 @@
 Array.prototype.customFilter = function (fn, context) {
   if (!fn || typeof fn !== 'function') {
     throw new Error('Invalid argument.');
-  } else if ((context && typeof context !== 'object') || context === null) {
+  } else if (
+    (context && typeof context !== 'object') ||
+    context === null ||
+    Array.isArray(context) ||
+    context instanceof Map ||
+    context instanceof Set
+  ) {
     throw new Error('Invalid argument.');
   } else {
     const filteredArr = [];
@@ -19,7 +25,10 @@ Array.prototype.customFilter = function (fn, context) {
 // Task 2
 
 function bubbleSort(arr) {
-  if (!arr.every((el) => isFinite(el) && !isNaN(el) && typeof el === 'number')) {
+  if (
+    !Array.isArray(arr) ||
+    !arr.every((el) => isFinite(el) && !isNaN(el) && typeof el === 'number')
+  ) {
     throw new Error('Invalid argument.');
   }
   const results = arr.slice();
