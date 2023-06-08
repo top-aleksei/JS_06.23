@@ -1,39 +1,39 @@
-function createDebounceFunction(cb, num) {
+// Task 1
+
+function createDebounceFunction(cb, time) {
   if (arguments.length != 2) {
-    console.log('ups');
+    throw new Error('Invalid argument.');
   }
   if (typeof cb !== 'function') {
-    console.log('ups cb');
+    throw new Error('Invalid argument.');
   }
   if (
-    typeof num !== 'number' ||
-    isNaN(num) ||
-    !isFinite(num) ||
-    num < 0 ||
-    !Number.isInteger(num)
+    typeof time !== 'number' ||
+    isNaN(time) ||
+    !isFinite(time) ||
+    time < 0 ||
+    !Number.isInteger(time)
   ) {
-    console.log('ups num', num);
+    throw new Error('Invalid argument.');
   }
-  let timerFn;
-  let timerValue;
+  let timer;
   return () => {
-    console.log('inFu');
-    if (timerFn) {
-      clearTimeout(timerFn);
+    if (timer) {
+      clearTimeout(timer);
     }
-    timerFn = setTimeout(() => {
+    timer = setTimeout(() => {
       cb.call(this);
-    }, num);
+    }, time);
   };
 }
 
-const fn = () => {
-  console.log('fn1');
-};
-const deb = createDebounceFunction(fn, 6000);
-deb();
+// const fn = () => {
+//   console.log('fn1');
+// };
+// const deb = createDebounceFunction(fn, 6000);
+// deb();
 
-setTimeout(deb, 3000);
+// setTimeout(deb, 3000);
 // createDebounceFunction(() => {}, 'a');
 // createDebounceFunction(() => {}, 0);
 // createDebounceFunction(() => {}, 0.5);
@@ -42,3 +42,52 @@ setTimeout(deb, 3000);
 // createDebounceFunction(() => {}, -10);
 // createDebounceFunction(() => {}, -Infinity);
 // createDebounceFunction(() => {}, NaN);
+
+// Task 2
+
+class RickAndMorty {
+  ENDPOINT = 'https://rickandmortyapi.com/api/';
+  getCharacter(id) {
+    if (!isValidNumber(id)) {
+      throw new Error('Invalid character id');
+    }
+    fetch(`${this.ENDPOINT}character/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        return data.error ? null : data;
+      });
+    // .then((res) => console.log(res));
+  }
+  async getEpisode(id) {
+    if (!isValidNumber(id)) {
+      throw new Error('Invalid episode id');
+    }
+    try {
+      const response = await fetch(`${this.ENDPOINT}episode/${id}`);
+      const data = await response.json();
+      const result = data.error ? null : data;
+      console.log(result);
+    } catch {
+      throw new Error('Err on fetching episode');
+    }
+  }
+}
+
+const rick = new RickAndMorty();
+// console.log('rick.endpoint: ', rick.ENDPOINT);
+// rick.getCharacter(1050);
+// rick.getEpisode(25);
+
+// number validation(positive, integer, finite, notNaN)
+
+function isValidNumber(num) {
+  console.log(typeof num);
+  return (
+    typeof num === 'number' && !isNaN(num) && isFinite(num) && num >= 0 && Number.isInteger(num)
+  );
+}
+// console.log(isValidNumber(5));
+// console.log(isValidNumber(-5));
+// console.log(isValidNumber('5'));
+// console.log(isValidNumber(NaN));
+// console.log(isValidNumber(2.3));
