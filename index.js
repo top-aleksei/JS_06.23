@@ -34,7 +34,8 @@ class RickAndMorty {
       .then((response) => response.json())
       .then((data) => {
         return data.error ? null : data;
-      });
+      })
+      .catch(() => null);
   }
 
   async getEpisode(id) {
@@ -46,7 +47,7 @@ class RickAndMorty {
       const data = await response.json();
       return data.error ? null : data;
     } catch {
-      throw new Error('Err on fetching episode');
+      return null;
     }
   }
 }
