@@ -8,7 +8,6 @@ class Stack {
     }
 
     this.limit = limit;
-    temp();
   }
 
   push(el) {
@@ -25,8 +24,11 @@ class Stack {
     }
     const lastEl = this.stack[this.size - 1];
     this.size--;
-    // rewrite without length
-    this.stack.length = this.size;
+    let tempArr = [];
+    for (let i = 0; i < this.size; i++) {
+      tempArr = [...tempArr, this.stack[i]];
+    }
+    this.stack = tempArr;
     return lastEl;
   }
 
@@ -124,7 +126,6 @@ class LinkedList {
 }
 
 class Car {
-  // get'n'set
   #brand = '';
   #model = '';
   #yearOfManufacturing = 1950;
@@ -132,8 +133,6 @@ class Car {
   #maxFuelVolume = 20;
   #fuelConsumption = 1;
   #damage = 1;
-
-  // only get
   #currentFuelVolume = 0;
   #isStarted = false;
   #mileage = 0;
@@ -310,21 +309,3 @@ function isValidNumber(num) {
     typeof num === 'number' && !isNaN(num) && isFinite(num) && num >= 0 && Number.isInteger(num)
   );
 }
-
-function temp() {
-  console.log('work');
-}
-// UTILS-END
-
-// const x = new Stack(2);
-// console.log('isEmpty', x.isEmpty());
-// console.log(x.stack);
-// x.push(2);
-// x.push('a');
-// console.log('isEmpty', x.isEmpty());
-// console.log(x.peek());
-// x.pop();
-// console.log(x.peek());
-// x.pop();
-// console.log(x.peek());
-// console.log('isEmpty', x.isEmpty());
