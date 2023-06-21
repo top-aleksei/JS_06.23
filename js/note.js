@@ -10,6 +10,7 @@ class Note extends Control {
     this.title = new Control(this.node, 'p', 'card__title', this.info.title);
     this.text = new Control(this.node, 'div', 'card__text', this.info.text);
     this.deleteBTN = new Control(this.node, 'div', 'card__delete', 'X');
+    this.favBTN = new Control(this.node, 'div', 'card__fav');
     this.buttonContainer = new Control(this.node, 'div', 'card__buttons');
 
     this.cancelBTN = new Control(
@@ -98,11 +99,19 @@ class Note extends Control {
     this.endEdit();
   }
 
+  toggleFavorite() {
+    this.favBTN.node.classList.toggle('card__fav_full');
+    const stateIndex = Main.state.findIndex((el) => el.id == this.info.id);
+    this.info.isFavorite = !this.info.isFavorite;
+    Main.state[stateIndex].isFavorite = this.info.isFavorite;
+  }
+
   addListeners() {
     this.deleteBTN.node.onclick = () => new Popup(this.info.title, this.delete.bind(this));
     this.editBTN.node.onclick = this.startEdit.bind(this);
     this.cancelBTN.node.onclick = this.cancelChange.bind(this);
     this.submitBTN.node.onclick = this.submitChange.bind(this);
+    this.favBTN.node.onclick = () => this.toggleFavorite();
     this.title.node.firstChild.addEventListener('DOMSubtreeModified', () => {
       this.title.node.style.color = 'black';
     });
@@ -114,6 +123,10 @@ class Note extends Control {
   render() {
     this.changeDateFormat();
     this.addListeners();
+
+    if (this.info.isFavorite) {
+      this.favBTN.node.classList.add('card__fav_full');
+    }
   }
 }
 

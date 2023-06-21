@@ -115,6 +115,7 @@ body {
 }
 
 .card__date {
+  margin-left: 30px;
   font-size: 12px;
 }
 
@@ -168,6 +169,19 @@ body {
   width: 90px;
   padding: 4px;
   font-size: 14px;
+}
+
+.card__fav {
+  position: absolute;
+  width: 23px;
+  height: 20px;
+  background: url('/assets/star.svg');
+  background-size: contain;
+  cursor: pointer;
+}
+
+.card__fav_full {
+  background: url('/assets/starFav.svg');
 }
 
 .card__invalid {
@@ -236,4 +250,12 @@ body {
   height: 35px;
   width: 75px;
   font-size: 16px;
+}
+
+.favorite__list {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
